@@ -1,10 +1,16 @@
 import { FaArrowLeft } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 const NewPost = () => {
+  const navigate = useNavigate()
+
   return (
     <div className="flex justify-center items-center w-full h-screen">
       <div className="w-8/12">
-        <div className="text-left w-full mb-8">
+        <div
+          className="text-left w-full mb-8 cursor-pointer"
+          onClick={() => navigate('/')}
+        >
           <p className="flex items-center gap-2">
             <FaArrowLeft />
             Back To Posts
