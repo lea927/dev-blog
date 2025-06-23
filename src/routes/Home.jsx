@@ -6,9 +6,23 @@ import blogPosts from '../lib/data'
 const Home = () => {
 
   const [search, setSearch] = useState('')
+  const [filteredPosts, setFilteredPosts] = useState(blogPosts)
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value)
+  }
+
+  const handleFilterPosts = () => {
+    if (search.trim() === '') {
+      setFilteredPosts(blogPosts)
+    } else {
+      const lowerCaseSearch = search.toLowerCase()
+      const filtered = blogPosts.filter(post =>
+        post.title.toLowerCase().includes(lowerCaseSearch) ||
+        post.content.toLowerCase().includes(lowerCaseSearch)
+      )
+      setFilteredPosts(filtered)
+    }
   }
 
   return (
@@ -23,11 +37,14 @@ const Home = () => {
         <input
           type="text"
           value={search}
-          onChange={handleSearchChange}
+          onChange={e => {
+            handleSearchChange(e)
+            handleFilterPosts()
+          }}
           placeholder="Search posts..."
           className="border rounded px-3 py-2 w-full border-gray-200"
         />
-        <BlogList posts={blogPosts}/>
+        <BlogList posts={filteredPosts}/>
       </div>
     </>
   )
